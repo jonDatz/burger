@@ -26,14 +26,13 @@ $(function() {
     event.preventDefault();
 
     var newBurger = {
-      burger_name: $("#ca").val().trim(),
-      devoured: $("[name=devour]:checked").val().trim()
+      name: $("#newBurger").val().trim()
     };
 
     // Send the POST request.
     $.ajax("/api/burgers", {
       type: "POST",
-      data: newBurger
+      data: newBurger 
     }).then(
       function() {
         console.log("created new burger");

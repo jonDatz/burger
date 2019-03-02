@@ -30,7 +30,7 @@ var orm = {
 
   // updateOne
 
-  updateOne: function (tableInput, devoured, id, callback) {
+  updateOne: function (tableInput, devoured, id, cb) {
     var queryString = "UPDATE ?? SET devoured = ? WHERE id = ?";
     connection.query(queryString, [tableInput, devoured, id], function (err, res) {
       if (err) throw err;
