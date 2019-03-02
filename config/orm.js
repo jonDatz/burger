@@ -5,12 +5,11 @@ var orm = {
   // selectAll
 
   selectAll: function (tableInput, cb) {
-    var queryString = "SELECT * FROM " + tableInput + ";";
+    var queryString = "SELECT * FROM ??;";
 
-    connection.query(queryString, function (err, res) {
-      if (err) {
-        throw err;
-      }
+    connection.query(queryString, [tableInput], function (err, res) {
+      if (err) throw err;
+
       cb(res);
       console.log(res);
 
@@ -19,17 +18,37 @@ var orm = {
 
   // insertOne
 
-  insertOne: function ()
+  insertOne: function (tableInput, burgerName, cb) {
+    var queryString = "INSERT INTO ?? (??) VALUES (?);";
+    connection.query(queryString, [tableInput, burgerName], function (err, res) {
+      if (err) throw err;
 
-
-
-
+      cb(res);
+      console.log(res);
+    });
+  },
 
   // updateOne
 
+  updateOne: function (tableInput, devoured, id, callback) {
+    var queryString = "UPDATE ?? SET devoured = ? WHERE id = ?";
+    connection.query(queryString, [tableInput, devoured, id], function (err, res) {
+      if (err) throw err;
+      cb(res);
+      console.log(res + " updated");
 
+    });
 
+  },
 
+  deleteOne: function (tableInput, id, cb) {
+    var queryString = "DELETE FROM ?? WHERE id = ?";
+    connection.query(queryString, [tableInput, id], function (err, result) {
+        if (err) throw err;
+        callback(result);
+        console.log(result + "deleted");
+      });
+  }
 }
 
 module.exports = orm;
