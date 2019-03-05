@@ -19,10 +19,15 @@ var orm = {
   // insertOne
 
   insertOne: function (tableInput, burgerName, cb) {
-    var queryString = "INSERT INTO ?? (??) VALUES (?);";
-    connection.query(queryString, [tableInput, burgerName], function (err, res) {
-      if (err) throw err;
-
+    var queryString = "INSERT INTO ?? VALUES ?;";
+    connection.query(queryString, {
+      burgers: tableInput,
+      burger_name: burgerName,
+      devoured: false,
+    }, function (err, res) {
+      if (err) {
+        throw err;
+      }
       cb(res);
       console.log(res);
     });
@@ -33,7 +38,9 @@ var orm = {
   updateOne: function (tableInput, devoured, id, cb) {
     var queryString = "UPDATE ?? SET devoured = ? WHERE id = ?";
     connection.query(queryString, [tableInput, devoured, id], function (err, res) {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       cb(res);
       console.log(res + " updated");
 
@@ -44,10 +51,12 @@ var orm = {
   deleteOne: function (tableInput, id, cb) {
     var queryString = "DELETE FROM ?? WHERE id = ?";
     connection.query(queryString, [tableInput, id], function (err, result) {
-        if (err) throw err;
-        callback(result);
-        console.log(result + "deleted");
-      });
+      if (err) {
+        throw err;
+      }
+      callback(result);
+      console.log(result + "deleted");
+    });
   }
 }
 
