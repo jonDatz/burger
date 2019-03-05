@@ -28,6 +28,7 @@ var orm = {
     queryString += burgerName;
     queryString += ") ";
 
+    console.log(queryString);
 
     connection.query(queryString, burgerName, function(err, res) {
       if (err) {
