@@ -18,13 +18,18 @@ var orm = {
 
   // insertOne
 
-  insertOne: function (tableInput, burgerName, cb) {
-    var queryString = "INSERT INTO ?? VALUES ?;";
-    connection.query(queryString, {
-      burgers: tableInput,
-      burger_name: burgerName,
-      devoured: false,
-    }, function (err, res) {
+  insertOne: function (tableInput, col, burgerName, cb) {
+    var queryString = "INSERT INTO " + tableInput;
+
+    queryString += " (";
+    queryString += col;
+    queryString += ") ";
+    queryString += "VALUES (";
+    queryString += burgerName;
+    queryString += ") ";
+
+
+    connection.query(queryString, burgerName, function(err, res) {
       if (err) {
         throw err;
       }
@@ -54,7 +59,7 @@ var orm = {
       if (err) {
         throw err;
       }
-      callback(result);
+      cb(result);
       console.log(result + "deleted");
     });
   }
